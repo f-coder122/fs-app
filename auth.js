@@ -25,6 +25,7 @@
         'fahrschule_learned'
     ];
     const PUSH_DELAY_MS = 1500;
+    const DEVICE_MERGED_KEY = 'fs_device_merged_';
 
     const client = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
     let currentUser = null;
@@ -96,17 +97,26 @@
             setStatus('Offline – lokaler Stand');
             return;
         }
-        if (row && row.data && hasAnyData(row.data)) {
+        const remote = (row && row.data) || {};
+        const mergedFlag = DEVICE_MERGED_KEY + encodeURIComponent(currentUser);
+        if (!localStorage.getItem(mergedFlag)) {
+            // Erste Anmeldung auf diesem Gerät: bisherigen Stand des Geräts mit dem Online-Stand zusammenführen
+            const local = collectLocal();
             DATA_KEYS.forEach(key => {
-                localStorage.setItem(userDataKey(currentUser, key), JSON.stringify(row.data[key] || []));
+                let list = mergeLists(remote[key], local[key]);
+                // Daten aus der Zeit vor den Konten gehören dem Hauptnutzer
+                if (currentUser === MAIN_USER) list = mergeLists(list, readJSON(key, []));
+                localStorage.setItem(userDataKey(currentUser, key), JSON.stringify(list));
             });
-            setStatus('Synchronisiert ✓');
-        } else if (hasAnyData(collectLocal())) {
-            // Noch nichts online: bisherigen Stand dieses Geräts hochladen
-            await pushNow();
-        } else {
-            setStatus('Synchronisiert ✓');
+            if (hasAnyData(collectLocal())) await pushNow();
+            else setStatus('Synchronisiert ✓');
+            localStorage.setItem(mergedFlag, new Date().toISOString());
+            return;
         }
+        DATA_KEYS.forEach(key => {
+            localStorage.setItem(userDataKey(currentUser, key), JSON.stringify(remote[key] || []));
+        });
+        setStatus('Synchronisiert ✓');
     }
 
     // Jede Änderung von app.js an den Daten des Nutzers automatisch hochladen
