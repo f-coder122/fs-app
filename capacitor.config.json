@@ -1,0 +1,13 @@
+{
+  "appId": "com.fahrschule.app",
+  "appName": "Fahrschul App",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
+}

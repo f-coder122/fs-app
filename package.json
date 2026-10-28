@@ -1,0 +1,23 @@
+{
+  "name": "fs-app",
+  "version": "1.0.0",
+  "description": "Dies ist ein lokaler Nachbau einer Fahrschul-App mit Lernmodus, Prüfungsmodus und Fehlerspeicher.",
+  "main": "app.js",
+  "scripts": {
+    "build": "node build.js",
+    "cap:sync": "node build.js && npx cap sync",
+    "cap:open:ios": "npx cap open ios",
+    "cap:open:android": "npx cap open android",
+    "serve": "python -m http.server 8000"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/cli": "^8.5.2",
+    "@capacitor/core": "^8.5.2",
+    "@capacitor/ios": "^8.5.2"
+  }
+}
