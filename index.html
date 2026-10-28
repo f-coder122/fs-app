@@ -21,35 +21,34 @@
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
     <!-- Top Bar (User Info) -->
-    <div class="bg-slate-700 text-slate-200 text-xs py-2 px-6 flex justify-between items-center shadow-inner">
-        <div class="flex items-center space-x-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-            <span id="current-user-name">Nicht angemeldet</span>
-            <button id="btn-auth" type="button" class="ml-2 bg-slate-600 hover:bg-slate-500 text-white px-2 py-0.5 rounded transition">Anmelden</button>
-            <button id="btn-export" type="button" class="hidden bg-slate-600 hover:bg-slate-500 text-white px-2 py-0.5 rounded transition" title="Fortschritt und Prüfungen als Datei sichern">Daten sichern</button>
-            <button id="btn-import" type="button" class="hidden bg-slate-600 hover:bg-slate-500 text-white px-2 py-0.5 rounded transition" title="Gesicherte Daten in dieses Konto laden">Daten laden</button>
+    <div class="bg-slate-700 text-slate-200 text-xs py-2 px-4 sm:px-6 flex justify-between items-center gap-2 shadow-inner">
+        <div class="flex flex-wrap items-center gap-2 min-w-0">
+            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+            <span id="current-user-name" class="font-semibold truncate max-w-[7rem]">Nicht angemeldet</span>
+            <button id="btn-auth" type="button" class="bg-slate-600 hover:bg-slate-500 text-white px-2 py-1 rounded transition">Anmelden</button>
+            <button id="btn-export" type="button" class="hidden bg-slate-600 hover:bg-slate-500 text-white px-2 py-1 rounded transition" title="Fortschritt und Prüfungen als Datei sichern">Sichern</button>
+            <button id="btn-import" type="button" class="hidden bg-slate-600 hover:bg-slate-500 text-white px-2 py-1 rounded transition" title="Gesicherte Daten in dieses Konto laden">Laden</button>
             <input id="import-file" type="file" accept="application/json,.json" class="hidden">
+            <span id="sync-status" class="text-slate-400"></span>
         </div>
-        <div id="nav-home-icon" class="cursor-pointer hover:text-white transition" title="Zurück zum Start">
+        <div id="nav-home-icon" class="flex-shrink-0 cursor-pointer hover:text-white transition p-1" title="Zurück zum Start">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
         </div>
     </div>
 
-    <!-- Main Nav (Lesen & Statistik entfernt, Ergebnis hinzugefügt) -->
+    <!-- Main Nav: am Handy Logo + Badges oben, Menü als eigene Zeile darunter -->
     <nav class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-10">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center">
-                <h1 class="text-2xl font-extrabold mr-10 tracking-tight cursor-pointer" id="nav-brand"><span class="text-red-600">CT</span>Online <span class="text-xs text-slate-400 font-normal ml-1 hidden sm:inline-block">Privat</span></h1>
-                <div class="flex space-x-6 overflow-x-auto nav-scroll text-sm uppercase tracking-wider font-semibold text-slate-500">
-                    <button id="nav-home" class="hover:text-red-600 transition whitespace-nowrap">Start</button>
-                    <button id="nav-learn" class="hover:text-red-600 transition whitespace-nowrap">Lernen</button>
-                    <button id="nav-exam" class="hover:text-red-600 transition whitespace-nowrap">Prüfung</button>
-                    <button id="nav-results" class="hover:text-red-600 transition whitespace-nowrap">Ergebnis</button>
-                </div>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex flex-wrap items-center justify-between gap-y-2">
+            <h1 class="text-2xl font-extrabold sm:mr-10 tracking-tight cursor-pointer" id="nav-brand"><span class="text-red-600">CT</span>Online <span class="text-xs text-slate-400 font-normal ml-1 hidden sm:inline-block">Privat</span></h1>
+            <div class="order-last sm:order-none w-full sm:w-auto sm:flex-1 grid grid-cols-4 sm:flex sm:space-x-6 text-xs sm:text-sm uppercase tracking-wider font-semibold text-slate-500 text-center">
+                <button id="nav-home" class="py-1.5 hover:text-red-600 transition whitespace-nowrap">Start</button>
+                <button id="nav-learn" class="py-1.5 hover:text-red-600 transition whitespace-nowrap">Lernen</button>
+                <button id="nav-exam" class="py-1.5 hover:text-red-600 transition whitespace-nowrap">Prüfung</button>
+                <button id="nav-results" class="py-1.5 hover:text-red-600 transition whitespace-nowrap">Ergebnis</button>
             </div>
             <div class="flex items-center gap-2">
             <button id="quick-favorite-badge" class="flex items-center bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-xs font-bold border border-amber-200 cursor-pointer hover:bg-amber-100 transition" title="Merkliste öffnen"><span id="quick-favorite-count">0</span>&nbsp;Merkliste</button>
-            <div id="quick-error-badge" class="hidden sm:flex items-center bg-red-50 text-red-600 px-3 py-1 rounded-full text-xs font-bold border border-red-200 cursor-pointer hover:bg-red-100 transition" title="Klicke hier, um den Fehlerspeicher zu öffnen">
+            <div id="quick-error-badge" class="flex items-center bg-red-50 text-red-600 px-3 py-1 rounded-full text-xs font-bold border border-red-200 cursor-pointer hover:bg-red-100 transition" title="Klicke hier, um den Fehlerspeicher zu öffnen">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                 <span id="quick-error-count">0</span> Fehler
             </div>
@@ -57,7 +56,7 @@
         </div>
     </nav>
 
-    <main class="max-w-5xl mx-auto px-4 py-8 flex-grow w-full">
+    <main class="max-w-5xl mx-auto px-4 py-5 sm:py-8 flex-grow w-full">
         <!-- Startbildschirm -->
         <div id="screen-home" class="space-y-8 animate-fade-in">
             <section class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-sm" aria-label="Prüfungsreife">
@@ -65,14 +64,14 @@
                 <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden"><div id="readiness-bar" class="h-full bg-red-600 rounded-full transition-all" style="width:0%"></div></div>
                 <p id="readiness-detail" class="mt-2 text-xs text-slate-500">0 von 0 Fragen richtig gelernt</p>
             </section>
-            <div class="text-center mb-10">
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-800 mb-3">Lernen, wann und wo Sie wollen!</h2>
+            <div class="text-center mb-6 sm:mb-10">
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-800 mb-3">Lernen, wann und wo Sie wollen!</h2>
                 <p class="text-base sm:text-lg text-slate-500">Wählen Sie einen Bereich, um mit dem Training oder der Prüfung zu beginnen.</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+            <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-6">
                 <!-- Card 1: Lernmodus mit Abschnitten -->
-                <button id="btn-start-learn" class="group bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col items-center text-center transform hover:-translate-y-1">
+                <button id="btn-start-learn" class="group bg-white p-4 sm:p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col items-center text-center transform hover:-translate-y-1">
                     <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                     </div>
@@ -81,7 +80,7 @@
                 </button>
                 
                 <!-- Card 2: Prüfung -->
-                <button id="btn-start-exam" class="group bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col items-center text-center transform hover:-translate-y-1">
+                <button id="btn-start-exam" class="group bg-white p-4 sm:p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col items-center text-center transform hover:-translate-y-1">
                     <div class="w-14 h-14 bg-red-100 text-red-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
@@ -90,7 +89,7 @@
                 </button>
                 
                 <!-- Card 3: Ergebnisse & Prüfungshistorie -->
-                <button id="btn-start-results" class="group bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col items-center text-center transform hover:-translate-y-1">
+                <button id="btn-start-results" class="group bg-white p-4 sm:p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col items-center text-center transform hover:-translate-y-1">
                     <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                     </div>
@@ -99,14 +98,14 @@
                 </button>
 
                 <!-- Card 4: Fehlerspeicher -->
-                <button id="btn-start-errors" class="group bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col items-center text-center transform hover:-translate-y-1">
+                <button id="btn-start-errors" class="group bg-white p-4 sm:p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col items-center text-center transform hover:-translate-y-1">
                     <div class="w-14 h-14 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                     </div>
                     <span class="font-bold text-lg text-slate-800 mb-1">Fehlerspeicher</span>
                     <span class="text-xs text-slate-500">Alle bisher falsch beantworteten Fragen gezielt wiederholen.</span>
                 </button>
-                <button id="btn-start-favorites" class="group bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col items-center text-center transform hover:-translate-y-1">
+                <button id="btn-start-favorites" class="col-span-2 lg:col-span-1 group bg-white p-4 sm:p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col items-center text-center transform hover:-translate-y-1">
                     <div class="w-14 h-14 bg-amber-100 text-amber-500 rounded-full flex items-center justify-center mb-4 text-3xl">★</div><span class="font-bold text-lg text-slate-800 mb-1">Merkliste</span><span class="text-xs text-slate-500">Gemerkte Fragen gezielt wiederholen.</span>
                 </button>
             </div>
@@ -151,7 +150,7 @@
                 </div>
             </div>
             
-            <div class="bg-white rounded-b-xl shadow-sm p-6 sm:p-10 border border-slate-200">
+            <div class="bg-white rounded-b-xl shadow-sm p-4 sm:p-10 border border-slate-200">
                 <div id="question-image-container" class="hidden text-center mb-8"></div>
                 <button id="btn-favorite" type="button" class="mb-4 inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-amber-200 text-amber-700 hover:bg-amber-50 text-sm font-semibold" aria-pressed="false"><span id="favorite-icon">☆</span><span id="favorite-label">Zur Merkliste</span></button>
                 
@@ -175,15 +174,15 @@
                 </div>
 
                 <!-- Navigation -->
-                <div class="mt-10 pt-6 border-t border-slate-100 flex justify-between items-center">
-                    <button id="btn-prev" class="hidden flex items-center space-x-2 bg-slate-100 text-slate-700 px-5 py-3 rounded-lg font-bold hover:bg-slate-200 transition disabled:opacity-40 disabled:cursor-not-allowed">
+                <div class="mt-8 sm:mt-10 pt-5 sm:pt-6 border-t border-slate-100 flex justify-between items-center gap-2">
+                    <button id="btn-prev" class="hidden flex items-center space-x-2 bg-slate-100 text-slate-700 px-4 sm:px-5 py-3 rounded-lg font-bold hover:bg-slate-200 transition disabled:opacity-40 disabled:cursor-not-allowed">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                         <span>Zurück</span>
                     </button>
                     
                     <div class="flex space-x-3">
-                        <button id="btn-check" class="bg-red-600 text-white px-7 py-3 rounded-lg font-bold shadow-md hover:bg-red-700 hover:shadow-lg transition-all focus:ring-4 focus:ring-red-200">Auflösen</button>
-                        <button id="btn-next" class="bg-slate-800 text-white px-7 py-3 rounded-lg font-bold shadow-md hover:bg-slate-900 hover:shadow-lg transition-all hidden focus:ring-4 focus:ring-slate-200 flex items-center space-x-2">
+                        <button id="btn-check" class="bg-red-600 text-white px-5 sm:px-7 py-3 rounded-lg font-bold shadow-md hover:bg-red-700 hover:shadow-lg transition-all focus:ring-4 focus:ring-red-200">Auflösen</button>
+                        <button id="btn-next" class="bg-slate-800 text-white px-5 sm:px-7 py-3 rounded-lg font-bold shadow-md hover:bg-slate-900 hover:shadow-lg transition-all hidden focus:ring-4 focus:ring-slate-200 flex items-center space-x-2">
                             <span>Weiter</span>
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         </button>
@@ -194,7 +193,7 @@
 
         <!-- Prüfungs-Abschluss (Zwischenscreen nach beendeter Prüfung) -->
         <div id="screen-result" class="hidden max-w-xl mx-auto text-center">
-            <div class="bg-white rounded-2xl shadow-lg p-10 border border-slate-100">
+            <div class="bg-white rounded-2xl shadow-lg p-6 sm:p-10 border border-slate-100">
                 <div id="result-icon-container" class="w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-6">
                     <!-- Icon injiziert via JS -->
                 </div>
@@ -215,7 +214,7 @@
 
         <!-- Neuer Bildschirm: Prüfungsergebnisse & Historie -->
         <div id="screen-results" class="hidden max-w-4xl mx-auto space-y-6">
-            <div class="flex justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200">
                 <div>
                     <h2 class="text-2xl font-bold text-slate-800">Prüfungsergebnisse & Verlauf</h2>
                     <p class="text-sm text-slate-500">Hier kannst du jede absolvierte Prüfung analysieren und deine Fehler wiederholen.</p>
